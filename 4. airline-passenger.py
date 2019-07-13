@@ -109,7 +109,7 @@ model.summary()
 
 
 # model training and saving
-model.compile(loss = 'mse', optimizer = 'rmsprop')
+model.compile(loss = 'mape', optimizer = 'rmsprop', metrics = ['acc'])
 model.fit(X_train, Y_train, epochs = MY_EPOCH, batch_size = MY_BATCH, verbose = 1)
 model.save('chap4.h5')
 
@@ -117,6 +117,12 @@ model.save('chap4.h5')
     ####################
     # MODEL EVALUATION #
     ####################
+
+
+# model evaluation
+score = model.evaluate(X_test, Y_test, verbose = 1)
+print('\nKeras RNN model loss = ', score[0])
+print('Keras RNN model accuracy = ', score[1])
 
 
 # transform [0, 1] values back to the original range
