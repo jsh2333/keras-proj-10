@@ -8,9 +8,10 @@
 # import packages
 import numpy as np
 import matplotlib.pyplot as plt
-from keras import models, layers
 from keras import datasets
-from keras.layers import Conv2D
+from keras.models import Sequential, Model
+from keras.layers import Input, Dense, Conv2D
+from keras.layers import MaxPooling2D, UpSampling2D
 
 
 # global constants and hyper-parameters
@@ -31,7 +32,7 @@ MY_VALID = 0.2
 
 
 # reshaping 2D image (28 x 28) to 3D image 
-#  with channel info (28 x 28 x 1)
+# with channel info (28 x 28 x 1)
 # we use channel-last ordering (keras default)
 # channel = 1 for black/white images
 print('\n== SHAPE INFO ==')
@@ -69,35 +70,30 @@ x_test = x_test.astype('float32') / 255
 
 # input layer
 shape_in = (28, 28, 1)
-image = layers.Input(shape = shape_in)
-
-
-# simplified convolution function for readability
-#def Conv2D(filters, kernel, padding, activation):
-#    return layers.Conv2D(filters, kernel, padding = 'SAME', activation = 'relu')
+image = Input(shape = shape_in)
 
 
 # 5-layer encoder
 # max-pooling reduces image size: 28 -> 14 -> 7
 x = Conv2D(10, (3, 3), padding = 'SAME', activation = 'relu')(image)
-x = layers.MaxPooling2D((2, 2), padding = 'SAME')(x)
+x = MaxPooling2D((2, 2), padding = 'SAME')(x)
 x = Conv2D(10, (3, 3), padding = 'SAME', activation = 'relu')(x)
-x = layers.MaxPooling2D((2, 2), padding = 'SAME')(x)
+x = MaxPooling2D((2, 2), padding = 'SAME')(x)
 h = Conv2D(1, (7, 7), padding = 'SAME', activation = 'relu')(x)
 
-encoder = models.Model(image, h)  
+encoder = Model(image, h)  
 
 
 # 5-layer decoder
 # upscaling increases image size: 7 -> 14 -> 28
 y = Conv2D(20, (3, 3), padding = 'SAME', activation = 'relu')(h)
-y = layers.UpSampling2D((2, 2))(y)
+y = UpSampling2D((2, 2))(y)
 y = Conv2D(10, (3, 3), padding = 'SAME', activation = 'relu')(y)
-y = layers.UpSampling2D((2, 2))(y)
+y = UpSampling2D((2, 2))(y)
 y = Conv2D(5, (3, 3), padding = 'SAME', activation = 'relu')(y)
 z = Conv2D(1, (3, 3), padding = 'SAME', activation = 'sigmoid')(y)
 
-model = models.Model(image, z)
+model = Model(image, z)
 decoder = model
 model.summary()
 
