@@ -32,7 +32,7 @@ MY_BATCH = 64
 # passenger data stored in a file
 # we process the data and build training/test sets ourselves
 # raw data will be normalized for better learning
-df = pd.read_csv('airline.csv', usecols = [1])
+df = pd.read_csv('airline.csv', header = None, usecols = [1])
 
 
 # convert panda data format to numpy array
@@ -55,7 +55,7 @@ print(raw_DB.flatten())
 # slice data into groups of 13
 # ex: 0-13, 1-14, 2-15, ... 130-143
 data = []
-for i in range(len(raw_DB) - MY_PAST - 1):
+for i in range(len(raw_DB) - MY_PAST):
     data.append(raw_DB[i: i + MY_PAST + 1])
 
 reshaped_data = np.array(data)
