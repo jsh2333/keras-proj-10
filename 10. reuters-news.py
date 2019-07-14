@@ -172,9 +172,8 @@ model.summary()
 
 
 # prediction using the model
-# we use it twice: before training and after training
+# shape needs to change from (2000,) to (1, 2000)
 def ask_question():
-
     sample = X_train[MY_SAMPLE]
     sample = sample.reshape(1, sample.shape[0])
     pred = model.predict(sample, verbose = 0)
