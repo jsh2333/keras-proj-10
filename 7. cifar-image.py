@@ -169,11 +169,9 @@ print("\nPrediction after learning:", labels[np.argmax(pred)], "\n")
 # we take argmax on one-hot encoding results 
 from sklearn.metrics import confusion_matrix
 answer = np.argmax(Y_test, axis = 1)
-answer = answer.reshape(answer.shape[0], 1)
 
 pred = model.predict(X_test)
 pred = np.argmax(pred, axis = 1)
-pred = pred.reshape(pred.shape[0], 1)
 
 print('\n== CONFUSION MATRIX ==')
 print(confusion_matrix(answer, pred))
