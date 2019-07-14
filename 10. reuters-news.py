@@ -12,6 +12,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import Activation
+from keras.datasets import reuters
 
 
 # global constants and hyper-parameters
