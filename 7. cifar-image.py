@@ -18,7 +18,7 @@ from keras.models import Sequential
 NUM_CLASS = 10
 MY_EPOCH = 10
 MY_BATCH = 64
-MY_SPLIT = 0.2
+MY_VALID = 0.2
 MY_SAMPLE = 52
 
 
@@ -142,7 +142,7 @@ print("\nPrediction before learning:", labels[np.argmax(pred)], "\n")
 model.compile(loss = 'categorical_crossentropy', optimizer = 'adadelta', 
         metrics = ['accuracy'])
 model.fit(X_train, Y_train, epochs = MY_EPOCH, batch_size = MY_BATCH, 
-        validation_split = MY_SPLIT)
+        validation_split = MY_VALID)
 model.save('chap7.h5')
 
 
