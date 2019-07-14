@@ -128,8 +128,8 @@ print("category", Y_train[MY_SAMPLE], labels[Y_train[MY_SAMPLE]])
 # we will NOT do padding (as in movie review classification)
 # instead we will do tokenization for the inputs
 # we get a vector (numpy array) of size MY_NUM_WORDS for each input 
-# the entries are binary 
-# the resulting matrix  matrix is very big
+# the entries are integer counts
+# the resulting matrix  is very big
 from keras.preprocessing.text import Tokenizer
 Tok = Tokenizer(num_words = MY_NUM_WORDS)
 X_train = Tok.sequences_to_matrix(X_train, mode = 'count')
